@@ -73,7 +73,19 @@ func (s *ReviewService) GetReview(ctx context.Context, req *pb.GetReviewRequest)
 	}, nil
 }
 func (s *ReviewService) AuditReview(ctx context.Context, req *pb.AuditReviewRequest) (*pb.AuditReviewReply, error) {
-	return &pb.AuditReviewReply{}, nil
+	fmt.Printf("[service] AuditReview req:%#v", req)
+	//调用biz层
+	err := s.uc.AuditReview(ctx, &biz.AuditParam{
+		ReviewID:  req.ReviewID,
+		Status:    req.Status,
+		OpUser:    req.OpUser,
+		OpReason:  req.OpReason,
+		OpRemarks: req.GetOpRemarks(),
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &pb.AuditReviewReply{ReviewID: req.ReviewID, Status: req.Status}, nil
 }
 
 func (s *ReviewService) ReplyReview(ctx context.Context, req *pb.ReplyReviewRequest) (*pb.ReplyReviewReply, error) {
@@ -103,6 +115,6 @@ func (s *ReviewService) AuditAppealReview(ctx context.Context, req *pb.AuditAppe
 	return &pb.AuditAppealReviewReply{}, nil
 }
 
-func (s *ReviewService) ListReview(ctx context.Context, req *pb.ListReviewByUserIDRequest) (*pb.ListReviewByUserIDReply, error) {
+func (s *ReviewService) ListReviewByUserID(ctx context.Context, req *pb.ListReviewByUserIDRequest) (*pb.ListReviewByUserIDReply, error) {
 	return &pb.ListReviewByUserIDReply{}, nil
 }

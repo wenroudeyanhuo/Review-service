@@ -29,8 +29,7 @@ func (r *reviewerRepo) SaveReview(ctx context.Context, review *model.ReviewInfo)
 	return review, err
 }
 func (r *reviewerRepo) ListReviewByUserID(ctx context.Context, UserID int64, offset, limit int) ([]*model.ReviewInfo, error) {
-	//TODO implement me
-	panic("implement me")
+	return r.data.query.ReviewInfo.WithContext(ctx).Where(r.data.query.ReviewInfo.UserID.Eq(UserID)).Order(r.data.query.ReviewInfo.ID.Desc()).Offset(offset).Limit(limit).Find()
 }
 
 // 根据订单id  查询评价
