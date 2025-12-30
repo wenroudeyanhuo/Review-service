@@ -74,6 +74,8 @@ func (r *reviewerRepo) SaveReply(ctx context.Context, reply *model.ReviewReplyIn
 			r.log.WithContext(ctx).Errorf("SaveReply update review fail.err:%v\n", err)
 			return err
 		}
+		//
+		r.log.WithContext(ctx).Infof("SaveReply success.reply:%v\n", reply)
 		return nil
 	})
 	if err != nil {
