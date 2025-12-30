@@ -70,7 +70,7 @@ func (r *reviewerRepo) SaveReply(ctx context.Context, reply *model.ReviewReplyIn
 			return err
 		}
 		//	评价表修改hasreply字段
-		if _, err := tx.ReviewInfo.WithContext(ctx).Where(tx.ReviewInfo.ReviewID.Eq(reply.ReplyID)).Update(tx.ReviewInfo.HasReply, 1); err != nil {
+		if _, err := tx.ReviewInfo.WithContext(ctx).Where(tx.ReviewInfo.ReviewID.Eq(reply.ReviewID)).Update(tx.ReviewInfo.HasReply, 1); err != nil {
 			r.log.WithContext(ctx).Errorf("SaveReply update review fail.err:%v\n", err)
 			return err
 		}
